@@ -13,7 +13,7 @@ import static org.firstinspires.ftc.teamcode.BasePurePursuit.MathFunctions.lineC
 
 public class RobotMovement {
 
-
+/*
     public static void followCurve(ArrayList<CurvePoint> allPoints, double followAngle){
 
         CurvePoint followMe = getFollowPointPath(allPoints, new Point(worldXPosition, worldYPosition), allPoints.get(0).followDistance);
@@ -48,7 +48,6 @@ public class RobotMovement {
  
 
     public static void goToPosition(double x, double y, double movementSpeed, double preferredAngle, double turnSpeed){
-        double worldXPosition = 0, worldYPosition = 0, worldAngle_rad = 0, movement_x = 0, movement_y = 0, movement_turn = 0;
 
         double distanceToTarget = Math.hypot(x-worldXPosition, y-worldYPosition);
 
@@ -67,11 +66,13 @@ public class RobotMovement {
         movement_y = movementYPower * movementSpeed;
 
         double relativeTurnAngle = relativeAngleToPoint - Math.toRadians(180) + preferredAngle;
-        movement_turn = Range.clip(relativeAngleToPoint/(Math.toRadians(30)), -1, 1) * turnSpeed;
+        movement_turn = Range.clip(relativeTurnAngle/(Math.toRadians(30)), -1, 1) * turnSpeed;
 
         if (distanceToTarget < 10){
             movement_turn = 0;
         }
 
     }
+
+ */
 }
