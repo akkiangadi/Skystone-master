@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.FirstOdoAutoPackage;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-public class StaticOdo{
+public class FirstOdo {
 
     DcMotor left, right, middle;
     int deltal, deltar, deltam;
@@ -25,7 +25,7 @@ public class StaticOdo{
 
 
 
-    public StaticOdo(DcMotor fl, DcMotor fr, DcMotor bl){this.left = fl; this.right = fr; this.middle = bl;}
+    public FirstOdo(DcMotor fl, DcMotor fr, DcMotor bl){this.left = fl; this.right = fr; this.middle = bl;}
 
     public void odoReset(DcMotor fl, DcMotor fr, DcMotor bl){this.left = fl; this.right = fr; this.middle = bl;}
 
