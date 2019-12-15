@@ -30,13 +30,45 @@ public class RobotMovement {
     }
 
 
+    public void goToPosition2(double targetX, double targetY, double targetHeading, double movementSpeed, double turnSpeed){
+
+        double deltaX = targetX - odo.getGlobalX();
+        double deltaY = targetY - odo.getGlobalY();
+        double deltaHeading = targetHeading - odo.getHeading();
+
+        if (deltaX == 0){
+            deltaX = 0.0001;
+        } else if (deltaY == 0){
+            deltaY = 0.0001;
+        } else if (deltaHeading == 0){
+            deltaY = 0.0001;
+        }
+
+        double snippedX = deltaX/(Math.abs(deltaX) + Math.abs(deltaY));
+        double snippedY = deltaY/(Math.abs(deltaX) + Math.abs(deltaY));
+        double snippedHeading = Range.clip(deltaHeading/(Math.toRadians(30)), -1, 1);
+
+        double x2 = movementSpeed * (snippedX*Math.cos(odo.getHeading()) + snippedY*Math.sin(odo.getHeading()));
+        double y2 = movementSpeed * (snippedY*Math.cos(odo.getHeading()) - snippedX*Math.sin(odo.getHeading()));
+        double z2 = turnSpeed * snippedHeading;
+
+        double flPower = x2 + y2 + z2;
+        double frPower = x2 - y2 + z2;
+        double blPower = -x2 + y2 + z2;
+        double brPower = -x2 - y2 + z2;
+
+        fl.setPower(flPower);
+        fr.setPower(frPower);
+        bl.setPower(blPower);
+        br.setPower(brPower);
+    }
 
     public void goToPosition(double targetX, double targetY, double targetAngle, double moveSpeed, double turnSpeed){
 
         double distanceToTarget = Math.hypot(targetX-odo.getGlobalX(), targetY-odo.getGlobalY());
-        double absoluteAngleToTarget = Math.atan2(targetY-odo.getGlobalY(), targetX-odo.getGlobalX());
+        double absoluteAngleToTarget = (Math.atan2(targetY-odo.getGlobalY(), targetX-odo.getGlobalX())) - Math.toRadians(180);
 
-        double relativeAngleToPoint = AngleWrap(absoluteAngleToTarget - (odo.getHeading()- Math.toRadians(90)));
+        double relativeAngleToPoint = AngleWrap(absoluteAngleToTarget - (odo.getHeading()));
 
         double deltaX = targetX - odo.getGlobalX();
         double deltaY = targetY - odo.getGlobalY();
@@ -47,7 +79,7 @@ public class RobotMovement {
         double movement_x = movementXPower * moveSpeed;
         double movement_y = movementYPower * moveSpeed;
 
-        double relativeTurnAngle = relativeAngleToPoint - Math.toRadians(180) + targetAngle;
+        double relativeTurnAngle = relativeAngleToPoint + targetAngle + Math.toRadians(45);
         double movement_z = Range.clip(relativeTurnAngle/(Math.toRadians(30)), -1, 1) * turnSpeed;
 
         if (distanceToTarget < 10){
@@ -67,7 +99,7 @@ public class RobotMovement {
             tickerFollow+=1;
         }
         Waypoint targetPoint = allPoints.get(tickerFollow);
-        goToPosition(targetPoint.x(), targetPoint.y(), Math.toRadians(90), targetPoint.moveSpeed(), targetPoint.turnSpeed());
+        goToPosition2(targetPoint.x(), targetPoint.y(), targetPoint.targetAngle(), targetPoint.moveSpeed(), targetPoint.turnSpeed());
 
     }
 

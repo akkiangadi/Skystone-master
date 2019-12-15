@@ -32,9 +32,9 @@ public class ParkAuto extends OpMode {
         movement.getOdo().odoloop();
 
         ArrayList<Waypoint> path = new ArrayList<>();
-        path.add(new Waypoint(0,0,2, 1, 1));
-        path.add(new Waypoint(100,150,2, 1, 1));
-        path.add(new Waypoint(30,70,2, 1, 1));
+        path.add(new Waypoint(0,0,2, 1, 1, 0));
+        path.add(new Waypoint(100,150,2, 1, 1, 0));
+        path.add(new Waypoint(30,70,2, 1, 1, 0));
 
         movement.followPath(path);
 

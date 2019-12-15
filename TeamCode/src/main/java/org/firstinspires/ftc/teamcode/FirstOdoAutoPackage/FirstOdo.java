@@ -18,7 +18,7 @@ public class FirstOdo {
     double theta;
     double WIDTH_BETWEEN_ENCODERS = 34.724;
     int COUNTS_PER_REV = 8192;
-    double WHEEL_DIAMETER =  5;
+    double WHEEL_DIAMETER =  2.95;
 
     double globalX = 0;
     double globalY = 0;
@@ -62,8 +62,8 @@ public class FirstOdo {
         deltar = r3 - r2;
         deltam = m3 - m2;
 
-        localDeltaX = ticksToCentimeters(deltam);
-        localDeltaY = ticksToCentimeters(localDeltaYf());
+        localDeltaX = ticksToInches(deltam);
+        localDeltaY = ticksToInches(localDeltaYf());
 
         globalDelta();
 
@@ -85,9 +85,9 @@ public class FirstOdo {
         return temp;
     }
 
-    public double ticksToCentimeters(double ticks){
+    public double ticksToInches(double ticks){
         double temp = (ticks*Math.PI*WHEEL_DIAMETER);
-        double temp2 = temp/8192;
+        double temp2 = temp/COUNTS_PER_REV;
         return temp2;
     }
 
