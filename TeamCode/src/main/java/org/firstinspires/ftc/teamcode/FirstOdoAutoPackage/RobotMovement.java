@@ -18,9 +18,7 @@ public class RobotMovement {
         this.br = br;
     }
 
-    public RobotMovement(){
-
-    }
+    public RobotMovement(){}
 
     public void movementUpdate(double globalX, double globalY, double globalT){
         this.globalT = globalT;
@@ -79,35 +77,6 @@ public class RobotMovement {
         br.setPower(brPower);
     }
 
-    //old pp method don't use? idk
-    public void goToPosition(double targetX, double targetY, double targetAngle, double moveSpeed, double turnSpeed){
-
-        double distanceToTarget = Math.hypot(targetX-globalX, targetY- globalY);
-        double absoluteAngleToTarget = (Math.atan2(targetY- globalY, targetX-globalX)) - Math.toRadians(90);
-
-        double relativeAngleToPoint = AngleWrap(absoluteAngleToTarget - (globalT));
-
-        double deltaX = targetX - globalX;
-        double deltaY = targetY - globalY;
-
-        double movementXPower = deltaX/(Math.abs(deltaX) + Math.abs(deltaY));
-        double movementYPower = deltaY/(Math.abs(deltaX) + Math.abs(deltaY));
-
-        double movement_x = movementXPower * moveSpeed;
-        double movement_y = movementYPower * moveSpeed;
-
-        double relativeTurnAngle = relativeAngleToPoint + targetAngle + Math.toRadians(90);
-        double movement_z = Range.clip(relativeTurnAngle/(Math.toRadians(30)), -1, 1) * turnSpeed;
-
-        if (distanceToTarget < 10){
-            movement_z = 0;
-        }
-
-        settPower(movement_x, movement_y, movement_z);
-
-    }
-
-
     int tickerFollow = 0;
     public boolean followPath(ArrayList<Waypoint> allPoints){
 
@@ -133,27 +102,5 @@ public class RobotMovement {
             isIt = false;
         }
         return isIt;
-    }
-
-    public double AngleWrap(double angle){
-        while(angle < -Math.PI){
-            angle += Math.PI;
-        }
-        while(angle > Math.PI){
-            angle -= Math.PI;
-        }
-        return angle;
-    }
-
-    public void settPower(double x_power, double y_power, double z_power){
-        double flP = x_power + y_power + z_power;
-        double frP = x_power - y_power + z_power;
-        double blP = -x_power + y_power + z_power;
-        double brP = -x_power - y_power + z_power;
-
-        fl.setPower(flP);
-        fr.setPower(frP);
-        bl.setPower(blP);
-        br.setPower(brP);
     }
 }
