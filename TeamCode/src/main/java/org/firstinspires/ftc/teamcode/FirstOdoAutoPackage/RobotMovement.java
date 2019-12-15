@@ -8,22 +8,18 @@ import java.util.ArrayList;
 public class RobotMovement {
 
     DcMotor fl, fr, bl, br;
-
     private double globalX, globalY, globalT;
 
-    public void setEverything(DcMotor fl, DcMotor fr, DcMotor bl, DcMotor br){
+    public RobotMovement(){}
+
+    public void movementUpdate(double globalX, double globalY, double globalT, DcMotor fl, DcMotor fr, DcMotor bl, DcMotor br){
+        this.globalT = globalT;
+        this.globalX = globalX;
+        this.globalY = globalY;
         this.fl = fl;
         this.fr = fr;
         this.bl = bl;
         this.br = br;
-    }
-
-    public RobotMovement(){}
-
-    public void movementUpdate(double globalX, double globalY, double globalT){
-        this.globalT = globalT;
-        this.globalX = globalX;
-        this.globalY = globalY;
     }
 
 
@@ -78,8 +74,7 @@ public class RobotMovement {
     }
 
     int tickerFollow = 0;
-    public boolean followPath(ArrayList<Waypoint> allPoints){
-
+    public boolean followPath(ArrayList<Waypoint> allPoints ){
         if ((tickerFollow +1) < allPoints.size()){
             if (inTriggerZone(allPoints.get(tickerFollow))){
                 tickerFollow+=1;
