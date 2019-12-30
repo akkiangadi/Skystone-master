@@ -21,6 +21,7 @@ public class ParkAuto extends OpMode {
     private enum parkAutoPath {leftNear, rightNear, leftFar, rightFar, running}
     private questionaire question = questionaire.question;
     private parkAutoPath autoPath = parkAutoPath.leftNear;
+    ArrayList<Waypoint> path = new ArrayList<>();
 
     @Override
     public void init() {
@@ -85,39 +86,41 @@ public class ParkAuto extends OpMode {
     }
 
     @Override
+    public void start(){
+        eTime.reset();
+    }
+
+    @Override
     public void loop() {
         odo.odoloop();
-        movement.movementUpdate(odo.globalX, odo.globalY, odo.getHeading(), fl, fr, bl, br);
+        movement.movementUpdate(odo.getGlobalX(), odo.getGlobalY(), odo.getHeading(), fl, fr, bl, br);
 
-        ArrayList<Waypoint> path = new ArrayList<>();
-
-        switch (autoPath){
-            case leftFar:
-                path.add(new Waypoint(0,0,2,1, 1));
-                path.add(new Waypoint(2,6,2, 0.6, 0.4));
-                path.add(new Waypoint(-4,6,1, 0.4, 0.3, 0));
-                autoPath = parkAutoPath.running;
-                break;
-            case leftNear:
-                path.add(new Waypoint(0,0,2, 1, 1));
-                path.add(new Waypoint(4,0,2, 0.6, 0.4, 0));
-                autoPath = parkAutoPath.running;
-                break;
-            case rightFar:
-                path.add(new Waypoint(0,0,2, 1, 1));
-                path.add(new Waypoint(-2,6,2, 0.6, 0.4));
-                path.add(new Waypoint(44,6,1, 0.4, 0.3, 0));
-                autoPath = parkAutoPath.running;
-                break;
-            case rightNear:
-                path.add(new Waypoint(0,0,2, 1, 1));
-                path.add(new Waypoint(-4,0,2, 0.6, 0.4, 0));
-                autoPath = parkAutoPath.running;
-            case running:
-                telemetry.addData("running", "all gud prolly");
-        }
-
-        if (eTime.time() > waitTime){
+        if (eTime.time() > waitTime) {
+            switch (autoPath) {
+                case leftFar:
+                    path.add(new Waypoint(0, 0, 2, 1, 1));
+                    path.add(new Waypoint(2, 6, 2, 0.6, 0.4));
+                    path.add(new Waypoint(-4, 6, 1, 0.4, 0.3, 0));
+                    autoPath = parkAutoPath.running;
+                    break;
+                case leftNear:
+                    path.add(new Waypoint(0, 0, 2, 1, 1));
+                    path.add(new Waypoint(4, 0, 2, 0.6, 0.4, 0));
+                    autoPath = parkAutoPath.running;
+                    break;
+                case rightFar:
+                    path.add(new Waypoint(0, 0, 2, 1, 1));
+                    path.add(new Waypoint(-2, 6, 2, 0.6, 0.4));
+                    path.add(new Waypoint(4, 6, 1, 0.4, 0.3, 0));
+                    autoPath = parkAutoPath.running;
+                    break;
+                case rightNear:
+                    path.add(new Waypoint(0, 0, 2, 1, 1));
+                    path.add(new Waypoint(-4, 0, 2, 0.6, 0.4, 0));
+                    autoPath = parkAutoPath.running;
+                case running:
+                    telemetry.addData("running", "all gud prolly");
+            }
             movement.followPath(path);
         }
     }
