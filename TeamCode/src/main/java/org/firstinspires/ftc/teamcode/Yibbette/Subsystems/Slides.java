@@ -27,11 +27,11 @@ public class Slides {
 
     public void slideCheck(){
         if (dup){
-            s1.setPower(0.5);
-            s2.setPower(-0.5);
+            s1.setPower(1);
+            s2.setPower(-1);
         } else if (ddown){
-            s1.setPower(-0.5);
-            s2.setPower(0.5);
+            s1.setPower(-1);
+            s2.setPower(1);
         } else {
             s1.setPower(0);
             s2.setPower(0);

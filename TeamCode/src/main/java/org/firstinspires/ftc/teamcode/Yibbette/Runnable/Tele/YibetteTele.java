@@ -39,8 +39,8 @@ public class YibetteTele extends OpMode {
         i1 = hardwareMap.dcMotor.get("i1");
         i2 = hardwareMap.dcMotor.get("i2");
 
-        t1 = hardwareMap.servo.get("t1");
-        t2 = hardwareMap.servo.get("t2");
+        //t1 = hardwareMap.servo.get("t1");
+        //t2 = hardwareMap.servo.get("t2");
 
         s1 = hardwareMap.dcMotor.get("sl");
         s2 = hardwareMap.dcMotor.get("sr");
