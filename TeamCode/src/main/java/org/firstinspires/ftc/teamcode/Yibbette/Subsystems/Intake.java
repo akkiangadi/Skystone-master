@@ -28,6 +28,7 @@ public class Intake {
     public void intakeInputs(boolean xgamepade, boolean agamepady){
         this.agamepad = agamepady;
         this.xgamepad = xgamepade;
+        intakeToggle();
     }
 
     public void intakeToggle(){

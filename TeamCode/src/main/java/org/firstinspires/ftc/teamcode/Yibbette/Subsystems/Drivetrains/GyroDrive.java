@@ -40,6 +40,7 @@ public class GyroDrive {
         this.rightStickX = rightStickXe;
         this.leftStickY = -leftStickYe;
         this.leftBumper = leftBumpere;
+        weBeDrivin();
     }
 
     public void weBeDrivin(){

@@ -25,8 +25,9 @@ public class WaffleTrapper {
         this.t2 = t2e;
     }
 
-    public void waffleTrapperInputs (boolean dPadDowne){
-        this.dpadDown = dPadDowne;
+    public void waffleTrapperInputs (boolean button){
+        this.dpadDown = button;
+        intakeToggle();
     }
 
     public void intakeToggle(){

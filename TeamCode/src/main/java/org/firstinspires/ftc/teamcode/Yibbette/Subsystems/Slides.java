@@ -23,6 +23,7 @@ public class Slides {
     public void slideInputs(boolean dup, boolean ddown){
         this.dup = dup;
         this.ddown = ddown;
+        slideCheck();
     }
 
     public void slideCheck(){
