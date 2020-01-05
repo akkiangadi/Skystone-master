@@ -1,7 +1,4 @@
 package org.firstinspires.ftc.teamcode.Yibbette.Runnable.Tele;
-
-import android.transition.Slide;
-
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -15,7 +12,7 @@ import org.firstinspires.ftc.teamcode.Yibbette.Subsystems.Slides;
 import org.firstinspires.ftc.teamcode.Yibbette.Subsystems.WaffleTrapper;
 
 @TeleOp(name = "December30", group = "eee")
-public class YibetteTele extends OpMode {
+public class ScrimmageTele extends OpMode {
 
 
     DcMotor fl, fr, bl, br, i1, i2, s1, s2;
@@ -69,30 +66,9 @@ public class YibetteTele extends OpMode {
     public void loop() {
         gyroDrive.drivetrainInputs(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.left_bumper);
         intake.intakeInputs(gamepad1.x, gamepad1.y);
-        slides.slideInputs(gamepad1.dpad_up, gamepad1.dpad_down);
+        slides.slideInputs2(gamepad1.dpad_up, gamepad1.dpad_down);
         waffleTrapper.waffleTrapperInputs(gamepad1.left_stick_button);
 
-
-
-        if (gamepad1.dpad_right){
-            v1.setPosition(1);
-            v2.setPosition(0);
-        } else if (gamepad1.dpad_left){
-            v1.setPosition(0);
-            v2.setPosition(1);
-        }
-
-        if (gamepad1.right_bumper){
-            grab.setPosition(1);
-        } else if (gamepad1.right_trigger > 0.1){
-            grab.setPosition(0);
-        }
-
-        telemetry.addData("fl pos: ", fl.getCurrentPosition());
-        telemetry.addData("fr pos: ", fr.getCurrentPosition());
-        telemetry.addData("bl pos: ", bl.getCurrentPosition());
-        telemetry.addData("br pos: ", br.getCurrentPosition());
-        telemetry.addData("slide pos: ", s1.getCurrentPosition());
 
         telemetry.addData("", teleMessage);
     }

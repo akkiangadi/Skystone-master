@@ -26,13 +26,38 @@ public class Slides {
         slideCheck();
     }
 
+    public void slideInputs2(boolean dup, boolean ddown){
+        this.dup = dup;
+        this.ddown = ddown;
+        slideCheck2();
+    }
+
     public void slideCheck(){
         if (dup){
-            s1.setPower(1);
-            s2.setPower(-1);
+            if (s1.getCurrentPosition() < 5782){
+                s1.setPower(1);
+                s2.setPower(-1);
+            }
         } else if (ddown){
             s1.setPower(-1);
             s2.setPower(1);
+        } else {
+            s1.setPower(0);
+            s2.setPower(0);
+        }
+    }
+
+    public void slideCheck2(){
+        if (dup){
+            if (s1.getCurrentPosition() < 5780){
+                s1.setPower(0.7);
+                s2.setPower(-0.7);
+            }
+        } else if (ddown){
+            if (s1.getCurrentPosition() > 0){
+                s1.setPower(-0.7);
+                s2.setPower(0.7);
+            }
         } else {
             s1.setPower(0);
             s2.setPower(0);

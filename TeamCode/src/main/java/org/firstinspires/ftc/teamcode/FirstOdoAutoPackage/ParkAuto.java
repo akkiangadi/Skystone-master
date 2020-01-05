@@ -15,6 +15,7 @@ public class ParkAuto extends OpMode {
     private RobotMovement movement = new RobotMovement();
     private FirstOdo odo = new FirstOdo(null, null, null);
     private ElapsedTime eTime = new ElapsedTime();
+    private ElapsedTime eTime2 = new ElapsedTime();
     private double waitTime = 0;
 
     private enum questionaire {question, left, right, leftNear, leftFar, rightNear, rightFar}
@@ -87,7 +88,7 @@ public class ParkAuto extends OpMode {
 
     @Override
     public void start(){
-        eTime.reset();
+        eTime2.reset();
     }
 
     @Override
@@ -95,7 +96,7 @@ public class ParkAuto extends OpMode {
         odo.odoloop();
         movement.movementUpdate(odo.getGlobalX(), odo.getGlobalY(), odo.getHeading(), fl, fr, bl, br);
 
-        if (eTime.time() > waitTime) {
+        if (eTime2.time() > waitTime) {
             switch (autoPath) {
                 case leftFar:
                     path.add(new Waypoint(0, 0, 2, 1, 1));
