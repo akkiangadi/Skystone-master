@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.CopyCat;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.io.File;
@@ -16,16 +17,24 @@ public class Playback extends OpMode {
 
 
     private DcMotor fl,fr,bl,br,i1, i2;
+    private Servo t1, t2;
     enum stateToggleIntake {
         intakeOn, intakeOff, intakeOut
     }
 
     stateToggleIntake toggleIntake = stateToggleIntake.intakeOff;
 
+    enum stateToggleWaffleTrapper {
+        trapperUp, trapperDown
+    }
+
+    stateToggleWaffleTrapper toggleWaffleTrapper = stateToggleWaffleTrapper.trapperUp;
+
     String bees;
     int ticker = 0;
     int ticker2 = 0;
     ElapsedTime runTime = new ElapsedTime();
+    ElapsedTime eTimerecord = new ElapsedTime();
     double xLeft[] = new double[200];
     double xRight[] = new double[200];
     double yLeft[] = new double[200];
@@ -93,6 +102,9 @@ public class Playback extends OpMode {
         i1 = hardwareMap.dcMotor.get("i1");
         i2 = hardwareMap.dcMotor.get("i2");
 
+        t1 = hardwareMap.servo.get("t1");
+        t2 = hardwareMap.servo.get("t2");
+
 
         fl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -151,6 +163,25 @@ public class Playback extends OpMode {
                         if (this.a[ticker2]){toggleIntake = stateToggleIntake.intakeOff;}
                         i1.setPower(1);
                         i2.setPower(-1);
+                        break;
+                }
+
+                switch (toggleWaffleTrapper){
+                    case trapperDown:
+                        t1.setPosition(1);
+                        t2.setPosition(0);
+                        if (eTimerecord.time() > 0.2){
+                            if (this.lButton[ticker2]){toggleWaffleTrapper = stateToggleWaffleTrapper.trapperUp;}
+                            eTimerecord.reset();
+                        }
+                        break;
+                    case trapperUp:
+                        t1.setPosition(0);
+                        t2.setPosition(1);
+                        if (eTimerecord.time() > 0.2){
+                            if (this.lButton[ticker2]){toggleWaffleTrapper = stateToggleWaffleTrapper.trapperDown;}
+                            eTimerecord.reset();
+                        }
                         break;
                 }
 

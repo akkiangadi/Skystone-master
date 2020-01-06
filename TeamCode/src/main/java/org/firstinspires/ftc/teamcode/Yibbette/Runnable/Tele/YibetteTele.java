@@ -67,11 +67,12 @@ public class YibetteTele extends OpMode {
 
     @Override
     public void loop() {
-        gyroDrive.drivetrainInputs(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.left_bumper);
+        gyroDrive.drivetrainInputs(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.left_bumper, gamepad1.right_stick_button);
         intake.intakeInputs(gamepad1.x, gamepad1.y);
         slides.slideInputs(gamepad1.dpad_up, gamepad1.dpad_down);
         waffleTrapper.waffleTrapperInputs(gamepad1.left_stick_button);
-
+        telemetry.addData("OffsetAngle", gyroDrive.offsetAngle);
+        telemetry.addData("rightStickPress", gamepad1.right_stick_button);
 
 
         if (gamepad1.dpad_right){

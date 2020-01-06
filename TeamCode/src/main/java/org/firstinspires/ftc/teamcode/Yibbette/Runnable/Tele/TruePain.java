@@ -57,7 +57,7 @@ public class TruePain extends OpMode {
         }
 
         if (this.dtChosen == "gyro"){
-            gyroDrive.drivetrainInputs(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.left_bumper);
+            gyroDrive.drivetrainInputs(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.left_bumper, gamepad1.right_stick_button);
             gyroDrive.weBeDrivin();
             telemetry.addData("", "field oriented");
         } else if (this.dtChosen == "regular"){

@@ -12,7 +12,8 @@ public class GyroDrive {
 
     private DcMotor fl, fr, bl, br;
     double pose, leftStickX, leftStickY, rightStickX, x2, y2, flPower, frPower, blPower, brPower;
-    boolean leftBumper;
+    public double offsetAngle = 0;
+    boolean leftBumper, rightStickBut;
     BNO055IMU imu;
     Orientation angles;
 
@@ -35,18 +36,22 @@ public class GyroDrive {
     }
 
 
-    public void drivetrainInputs(double leftStickXe, double leftStickYe, double rightStickXe, boolean leftBumpere){
+    public void drivetrainInputs(double leftStickXe, double leftStickYe, double rightStickXe, boolean leftBumpere, boolean rightStickButton){
         this.leftStickX = leftStickXe;
         this.rightStickX = rightStickXe;
         this.leftStickY = -leftStickYe;
         this.leftBumper = leftBumpere;
+        this.rightStickBut = rightStickButton;
         weBeDrivin();
     }
 
     public void weBeDrivin(){
-        angles   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        pose = Math.toRadians(angles.firstAngle);
+        this.angles   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        this.pose = (Math.toRadians(angles.firstAngle) - this.offsetAngle);
+        if (this.rightStickBut){
+            this.offsetAngle = this.pose;
 
+        }
 
         x2 = (this.leftStickX*Math.cos(pose) + this.leftStickY*Math.sin(pose));
         y2 = (this.leftStickY*Math.cos(pose) - this.leftStickX*Math.sin(pose));
@@ -57,10 +62,10 @@ public class GyroDrive {
         brPower = -x2 - y2 + this.rightStickX;
 
         if (this.leftBumper == true){
-            flPower/=5;
-            frPower/=5;
-            blPower/=5;
-            brPower/=5;
+            flPower/=2.5;
+            frPower/=2.5;
+            blPower/=2.5;
+            brPower/=2.5;
         }
 
         fl.setPower(flPower);

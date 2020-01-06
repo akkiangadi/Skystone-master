@@ -5,6 +5,7 @@ import android.os.Environment;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.io.File;
@@ -15,15 +16,23 @@ import java.io.IOException;
 public class Recorder extends OpMode {
 
     private DcMotor fl,fr,bl,br, i1, i2;
+    private Servo t1, t2;
     enum stateToggleIntake {
         intakeOn, intakeOff, intakeOut
     }
 
     stateToggleIntake toggleIntake = stateToggleIntake.intakeOff;
 
+    enum stateToggleWaffleTrapper {
+        trapperUp, trapperDown
+    }
+
+    stateToggleWaffleTrapper toggleWaffleTrapper = stateToggleWaffleTrapper.trapperUp;
+
     String pee;
     int ticker = 0;
     ElapsedTime runTime = new ElapsedTime();
+    ElapsedTime eTimerecord = new ElapsedTime();
     double xLeft[] = new double[200];
     double xRight[] = new double[200];
     double yLeft[] = new double[200];
@@ -51,6 +60,9 @@ public class Recorder extends OpMode {
         br = hardwareMap.dcMotor.get("br");
         i1 = hardwareMap.dcMotor.get("i1");
         i2 = hardwareMap.dcMotor.get("i2");
+
+        t1 = hardwareMap.servo.get("t1");
+        t2 = hardwareMap.servo.get("t2");
 
         fl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -104,6 +116,25 @@ public class Recorder extends OpMode {
                     if (gamepad1.a){toggleIntake = stateToggleIntake.intakeOff;}
                     i1.setPower(1);
                     i2.setPower(-1);
+                    break;
+            }
+
+            switch (toggleWaffleTrapper){
+                case trapperDown:
+                    t1.setPosition(1);
+                    t2.setPosition(0);
+                    if (eTimerecord.time() > 0.2){
+                        if (gamepad1.left_stick_button){toggleWaffleTrapper = stateToggleWaffleTrapper.trapperUp;}
+                        eTimerecord.reset();
+                    }
+                    break;
+                case trapperUp:
+                    t1.setPosition(0);
+                    t2.setPosition(1);
+                    if (eTimerecord.time() > 0.2){
+                        if (gamepad1.left_stick_button){toggleWaffleTrapper = stateToggleWaffleTrapper.trapperDown;}
+                        eTimerecord.reset();
+                    }
                     break;
             }
 

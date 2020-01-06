@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.Yibbette.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Yibbette.Subsystems.Slides;
 import org.firstinspires.ftc.teamcode.Yibbette.Subsystems.WaffleTrapper;
 
-@TeleOp(name = "December30", group = "eee")
+@TeleOp(name = "ScrimmageTele", group = "eee")
 public class ScrimmageTele extends OpMode {
 
 
@@ -64,7 +64,7 @@ public class ScrimmageTele extends OpMode {
 
     @Override
     public void loop() {
-        gyroDrive.drivetrainInputs(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.left_bumper);
+        gyroDrive.drivetrainInputs(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.left_bumper, gamepad1.right_stick_button);
         intake.intakeInputs(gamepad1.x, gamepad1.y);
         slides.slideInputs2(gamepad1.dpad_up, gamepad1.dpad_down);
         waffleTrapper.waffleTrapperInputs(gamepad1.left_stick_button);
