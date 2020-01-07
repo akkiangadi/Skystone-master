@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class WaffleTrapper {
 
     Servo t1, t2;
-    boolean dpadDown;
-    ElapsedTime eTime = new ElapsedTime();
+    boolean leftButton;
+    ElapsedTime eTimeWaffle = new ElapsedTime();
 
     enum stateToggleWaffleTrapper {
         trapperUp, trapperDown
@@ -25,8 +25,8 @@ public class WaffleTrapper {
         this.t2 = t2e;
     }
 
-    public void waffleTrapperInputs (boolean button){
-        this.dpadDown = button;
+    public void waffleTrapperInputs (boolean leftStickButton){
+        this.leftButton = leftStickButton;
         intakeToggle();
     }
 
@@ -35,17 +35,17 @@ public class WaffleTrapper {
             case trapperDown:
                 t1.setPosition(1);
                 t2.setPosition(0);
-                if (eTime.time() > 0.2){
-                    if (dpadDown){toggleWaffleTrapper = stateToggleWaffleTrapper.trapperUp;}
-                    eTime.reset();
+                if (eTimeWaffle.time() > 0.2){
+                    if (leftButton){toggleWaffleTrapper = stateToggleWaffleTrapper.trapperUp;}
+                    eTimeWaffle.reset();
                 }
                 break;
             case trapperUp:
                 t1.setPosition(0);
                 t2.setPosition(1);
-                if (eTime.time() > 0.2){
-                    if (dpadDown){toggleWaffleTrapper = stateToggleWaffleTrapper.trapperDown;}
-                    eTime.reset();
+                if (eTimeWaffle.time() > 0.2){
+                    if (leftButton){toggleWaffleTrapper = stateToggleWaffleTrapper.trapperDown;}
+                    eTimeWaffle.reset();
                 }
                 break;
             }

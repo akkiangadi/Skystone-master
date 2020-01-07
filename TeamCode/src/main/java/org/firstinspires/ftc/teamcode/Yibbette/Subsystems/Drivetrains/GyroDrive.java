@@ -17,6 +17,8 @@ public class GyroDrive {
     BNO055IMU imu;
     Orientation angles;
 
+    private double SPEED = 0.8;
+
 
 
     public GyroDrive(DcMotor fle, DcMotor fre, DcMotor ble, DcMotor bre, BNO055IMU imuu){
@@ -68,10 +70,10 @@ public class GyroDrive {
             brPower/=2.5;
         }
 
-        fl.setPower(flPower);
-        fr.setPower(frPower);
-        bl.setPower(blPower);
-        br.setPower(brPower);
+        fl.setPower(flPower*SPEED);
+        fr.setPower(frPower*SPEED);
+        bl.setPower(blPower*SPEED);
+        br.setPower(brPower*SPEED);
     }
 
 }

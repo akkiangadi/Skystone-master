@@ -13,7 +13,7 @@ public class Intake {
 
     boolean xgamepad, agamepad;
     DcMotor i1, i2;
-    ElapsedTime eTime2 = new ElapsedTime();
+    ElapsedTime eTimeIntake = new ElapsedTime();
 
     public Intake(DcMotor i1e, DcMotor i2e){
         this.i1 = i1e;
@@ -32,7 +32,7 @@ public class Intake {
     }
 
     public void intakeToggle(){
-        if (eTime2.time() > 0.2){
+        if (eTimeIntake.time() > 0.2){
             switch (toggleIntake){
                 case intakeOn:
                     i1.setPower(-1);
@@ -53,7 +53,7 @@ public class Intake {
                     if (agamepad){toggleIntake = stateToggleIntake.intakeOff;}
                     break;
             }
-            eTime2.reset();
+            eTimeIntake.reset();
         }
 
     }
