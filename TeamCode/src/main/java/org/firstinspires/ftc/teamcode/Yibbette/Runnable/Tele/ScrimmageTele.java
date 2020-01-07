@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Yibbette.Subsystems.Drivetrains.GyroDrive;
 import org.firstinspires.ftc.teamcode.Yibbette.RandomTelemetry;
@@ -23,6 +24,7 @@ public class ScrimmageTele extends OpMode {
     Intake intake = new Intake(null, null);
     Slides slides = new Slides(null, null);
     WaffleTrapper waffleTrapper = new WaffleTrapper(null, null);
+    ElapsedTime eTime = new ElapsedTime();
 
     String teleMessage = new String(RandomTelemetry.RandomTelemetry());
 
@@ -65,9 +67,9 @@ public class ScrimmageTele extends OpMode {
     @Override
     public void loop() {
         gyroDrive.drivetrainInputs(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.left_bumper, gamepad1.right_stick_button);
-        intake.intakeInputs(gamepad1.x, gamepad1.y);
+        intake.intakeInputs(gamepad1.x, gamepad1.y, eTime.time());
         slides.slideInputs2(gamepad1.dpad_up, gamepad1.dpad_down);
-        waffleTrapper.waffleTrapperInputs(gamepad1.left_stick_button);
+        waffleTrapper.waffleTrapperInputs(gamepad1.left_stick_button, eTime.time());
 
 
         telemetry.addData("", teleMessage);

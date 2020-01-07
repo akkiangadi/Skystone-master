@@ -1,14 +1,11 @@
 package org.firstinspires.ftc.teamcode.Yibbette.Subsystems;
 
-
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Slides {
 
-    boolean dup, ddown;
-    DcMotor s1, s2;
-    ElapsedTime eTime2 = new ElapsedTime();
+    private boolean dup, ddown;
+    private DcMotor s1, s2;
 
     public Slides(DcMotor s1, DcMotor s2){
         this.s1 = s1;
