@@ -17,7 +17,7 @@ public class ScrimmageTele extends OpMode {
 
 
     DcMotor fl, fr, bl, br, i1, i2, s1, s2;
-    Servo t1, t2, v1, v2, grab;
+    Servo t1, t2, v1, v2, grab, abgl1, abgl2, abgr1, abgr2;
     BNO055IMU imu;
 
     GyroDrive gyroDrive = new GyroDrive(null, null, null, null, null);
@@ -49,6 +49,11 @@ public class ScrimmageTele extends OpMode {
         v2 = hardwareMap.servo.get("v2");
         grab = hardwareMap.servo.get("grab");
 
+        abgl1 = hardwareMap.servo.get("l1");
+        abgl2 = hardwareMap.servo.get("l2");
+        abgr1 = hardwareMap.servo.get("r1");
+        abgr2 = hardwareMap.servo.get("r2");
+
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.calibrationDataFile = "AdafruitIMUCalibration.json";
@@ -62,15 +67,37 @@ public class ScrimmageTele extends OpMode {
         slides.assignSlides(s1, s2);
         waffleTrapper.assignWaffleTrapper(t1, t2);
 
+        gyroDrive.resetEncoders();
+        gyroDrive.runUsingEncoder();
+
     }
 
     @Override
     public void loop() {
-        gyroDrive.drivetrainInputs(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.left_bumper, gamepad1.right_stick_button);
+        gyroDrive.drivetrainInputs(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.left_bumper, gamepad1.back);
         intake.intakeInputs(gamepad1.x, gamepad1.y, eTime.time());
         slides.slideInputs2(gamepad1.dpad_up, gamepad1.dpad_down);
         waffleTrapper.waffleTrapperInputs(gamepad1.left_stick_button, eTime.time());
 
+        if (gamepad2.dpad_up){
+            v1.setPosition(0.7);
+            v2.setPosition(0.3);
+        } else if (gamepad2.dpad_down){
+            v1.setPosition(0.3);
+            v2.setPosition(0.7);
+        } else {
+            v1.setPosition(0.5);
+            v2.setPosition(0.5);
+        }
+
+        if (gamepad2.a){
+            grab.setPosition(0.3);
+        } else if (gamepad2.b) {
+            grab.setPosition(0.7);
+        }
+        telemetry.addData("v1Pos", v1.getPosition());
+        telemetry.addData("v2Pos", v2.getPosition());
+        telemetry.addData("grabPos", grab.getPosition());
 
         telemetry.addData("", teleMessage);
     }

@@ -77,21 +77,6 @@ public class YibetteTele extends OpMode {
         telemetry.addData("OffsetAngle", gyroDrive.offsetAngle);
         telemetry.addData("rightStickPress", gamepad1.right_stick_button);
 
-
-        if (gamepad1.dpad_right){
-            v1.setPosition(1);
-            v2.setPosition(0);
-        } else if (gamepad1.dpad_left){
-            v1.setPosition(0);
-            v2.setPosition(1);
-        }
-
-        if (gamepad1.right_bumper){
-            grab.setPosition(1);
-        } else if (gamepad1.right_trigger > 0.1){
-            grab.setPosition(0);
-        }
-
         telemetry.addData("fl pos: ", fl.getCurrentPosition());
         telemetry.addData("fr pos: ", fr.getCurrentPosition());
         telemetry.addData("bl pos: ", bl.getCurrentPosition());

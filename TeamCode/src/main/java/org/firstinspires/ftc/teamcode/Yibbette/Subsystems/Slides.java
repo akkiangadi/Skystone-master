@@ -36,8 +36,8 @@ public class Slides {
                 s2.setPower(-1);
             }
         } else if (ddown){
-            s1.setPower(-1);
-            s2.setPower(1);
+            s1.setPower(-0.5);
+            s2.setPower(0.5);
         } else {
             s1.setPower(0);
             s2.setPower(0);
@@ -52,8 +52,8 @@ public class Slides {
             }
         } else if (ddown){
             if (s1.getCurrentPosition() > 0){
-                s1.setPower(-0.7);
-                s2.setPower(0.7);
+                s1.setPower(-0.3);
+                s2.setPower(0.3);
             }
         } else {
             s1.setPower(0);

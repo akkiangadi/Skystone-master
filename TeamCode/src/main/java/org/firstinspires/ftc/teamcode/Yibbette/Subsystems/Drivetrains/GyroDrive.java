@@ -17,10 +17,6 @@ public class GyroDrive {
     BNO055IMU imu;
     Orientation angles;
 
-    private double SPEED = 0.8;
-
-
-
     public GyroDrive(DcMotor fle, DcMotor fre, DcMotor ble, DcMotor bre, BNO055IMU imuu){
         this.fl = fle;
         this.fr = fre;
@@ -37,6 +33,26 @@ public class GyroDrive {
         this.imu = imuu;
     }
 
+    public void resetEncoders(){
+        fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    public void runUsingEncoder(){
+        fl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        fr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public void runWithoutEncoders(){
+        fl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        fr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        bl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        br.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
 
     public void drivetrainInputs(double leftStickXe, double leftStickYe, double rightStickXe, boolean leftBumpere, boolean rightStickButton){
         this.leftStickX = leftStickXe;
@@ -48,7 +64,8 @@ public class GyroDrive {
     }
 
     public void weBeDrivin(){
-        this.angles   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        this.angles   = imu.getAngularOrientation(AxesReference.INTRINSIC,
+                AxesOrder.ZYX, AngleUnit.DEGREES);
         this.pose = (Math.toRadians(angles.firstAngle) - this.offsetAngle);
         if (this.rightStickBut){
             this.offsetAngle = this.pose;
@@ -64,16 +81,16 @@ public class GyroDrive {
         brPower = -x2 - y2 + this.rightStickX;
 
         if (this.leftBumper == true){
-            flPower/=2.5;
-            frPower/=2.5;
-            blPower/=2.5;
-            brPower/=2.5;
+            flPower/=3;
+            frPower/=3;
+            blPower/=3;
+            brPower/=3;
         }
 
-        fl.setPower(flPower*SPEED);
-        fr.setPower(frPower*SPEED);
-        bl.setPower(blPower*SPEED);
-        br.setPower(brPower*SPEED);
+        fl.setPower(flPower);
+        fr.setPower(frPower);
+        bl.setPower(blPower);
+        br.setPower(brPower);
     }
 
 }

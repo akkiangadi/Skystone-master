@@ -36,12 +36,12 @@ public class WaffleTrapper {
             switch (toggleWaffleTrapper){
                 case trapperDown:
                     t1.setPosition(1);
-                    t2.setPosition(0);
+                    //t2.setPosition(0);
                     if (leftButton){toggleWaffleTrapper = stateToggleWaffleTrapper.trapperUp; timeToggleWaffle = time;}
                     break;
                 case trapperUp:
                     t1.setPosition(0);
-                    t2.setPosition(1);
+                    //t2.setPosition(1);
                     if (leftButton){toggleWaffleTrapper = stateToggleWaffleTrapper.trapperDown; timeToggleWaffle = time;}
                     break;
             }
