@@ -10,7 +10,7 @@ import java.util.ArrayList;
 @Autonomous(name = "ParkAuto", group = "Workers")
 public class ParkAuto extends OpMode {
 
-    private DcMotor fl, fr, bl, br;
+    private DcMotor fl, fr, bl, br, ol, or, h;
 
     private RobotMovement movement = new RobotMovement();
     private FirstOdo odo = new FirstOdo(null, null, null);
@@ -30,8 +30,11 @@ public class ParkAuto extends OpMode {
         bl = hardwareMap.dcMotor.get("bl");
         fr = hardwareMap.dcMotor.get("fr");
         br = hardwareMap.dcMotor.get("br");
+        ol = hardwareMap.dcMotor.get("i1");
+        or = hardwareMap.dcMotor.get("i2");
+        h = hardwareMap.dcMotor.get("sr");
 
-        odo.odoReset(fl,fr, bl);
+        odo.odoReset(ol, or, h);
         odo.setGlobalX(0);
         odo.setGlobalY(0);
     }

@@ -80,7 +80,8 @@ public class RobotMovement {
                 tickerFollow+=1;
             }
             Waypoint targetPoint = allPoints.get(tickerFollow);
-            goToPosition2(targetPoint.x(), targetPoint.y(), targetPoint.targetAngle(), targetPoint.moveSpeed(), targetPoint.turnSpeed());
+            goToPosition2(targetPoint.x(), targetPoint.y(), targetPoint.targetAngle(),
+                    targetPoint.moveSpeed(), targetPoint.turnSpeed());
             return true;
         } else {
             return false;

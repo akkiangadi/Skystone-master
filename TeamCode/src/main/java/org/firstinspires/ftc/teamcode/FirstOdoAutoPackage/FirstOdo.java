@@ -16,16 +16,17 @@ public class FirstOdo {
     double localDeltaX, localDeltaY;
     double globalDeltaX = 0, globalDeltaY = 0;
     double theta;
-    double WIDTH_BETWEEN_ENCODERS = 34.724;
+    double WIDTH_BETWEEN_ENCODERS = 12.825;
+    double OFFSET_OF_MIDDLE_WHEEL;
     int COUNTS_PER_REV = 8192;
-    double WHEEL_DIAMETER =  2.95;
+    double WHEEL_DIAMETER =  2.96;
 
     double globalX = 0;
     double globalY = 0;
 
 
 
-    public FirstOdo(DcMotor fl, DcMotor fr, DcMotor bl){this.left = fl; this.right = fr; this.middle = bl;}
+    public FirstOdo(DcMotor l, DcMotor r, DcMotor m){this.left = l; this.right = r; this.middle = m;}
 
     public void odoReset(DcMotor fl, DcMotor fr, DcMotor bl){this.left = fl; this.right = fr; this.middle = bl;}
 
@@ -75,7 +76,7 @@ public class FirstOdo {
     }
 
     public double robotHeading(){
-        double temp = ((l3-r3)/WIDTH_BETWEEN_ENCODERS);
+        double temp = ((ticksToInches(l3)-ticksToInches(r3))/WIDTH_BETWEEN_ENCODERS);
         return temp;
     }
 

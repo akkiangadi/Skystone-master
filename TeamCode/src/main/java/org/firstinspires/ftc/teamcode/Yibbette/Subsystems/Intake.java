@@ -35,12 +35,12 @@ public class Intake {
     private void intakeToggle(){
         if (time > (timeIntakeToggle + 0.2)){
             switch (toggleIntake){
-                case intakeOn:
-                    i1.setPower(-1);
-                    i2.setPower(0.8);
-                    if (xgamepad){toggleIntake = stateToggleIntake.intakeOff;
+                case intakeOut:
+                    i1.setPower(-0.3);
+                    i2.setPower(0.3);
+                    if (agamepad){toggleIntake = stateToggleIntake.intakeOff;
                     timeIntakeToggle = time;}
-                    if (agamepad){toggleIntake = stateToggleIntake.intakeOut;
+                    if (xgamepad){toggleIntake = stateToggleIntake.intakeOn;
                     timeIntakeToggle = time;}
                     break;
                 case intakeOff:
@@ -51,12 +51,12 @@ public class Intake {
                     if (agamepad){toggleIntake = stateToggleIntake.intakeOut;
                     timeIntakeToggle = time;}
                     break;
-                case intakeOut:
-                    i1.setPower(1);
-                    i2.setPower(-1);
-                    if (xgamepad){toggleIntake = stateToggleIntake.intakeOn;
+                case intakeOn:
+                    i1.setPower(0.8);
+                    i2.setPower(-0.8);
+                    if (agamepad){toggleIntake = stateToggleIntake.intakeOut;
                     timeIntakeToggle = time;}
-                    if (agamepad){toggleIntake = stateToggleIntake.intakeOff;
+                    if (xgamepad){toggleIntake = stateToggleIntake.intakeOff;
                     timeIntakeToggle = time;}
                     break;
             }
