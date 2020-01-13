@@ -1,7 +1,8 @@
-package org.firstinspires.ftc.teamcode.Yibbette.Subsystems.Drivetrains;
+package org.firstinspires.ftc.teamcode.Yibbon.Subsystems.Drivetrains;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -14,28 +15,31 @@ public class GyroDrive {
     private DcMotor fl, fr, bl, br;
     double pose, leftStickX, leftStickY, rightStickX, x2, y2, flPower, frPower, blPower, brPower;
     public double offsetAngle = 0;
-    boolean leftBumper, rightStickBut;
+    boolean leftBumper, rightStickBut, leftStickBut2;
     BNO055IMU imu;
     Orientation angles;
+    HardwareMap hardwareMap;
     Telemetry telemetry;
     boolean telemetryEnabled = false;
 
-    public GyroDrive(DcMotor fle, DcMotor fre, DcMotor ble, DcMotor bre, BNO055IMU imuu, Telemetry telemetry){
-        this.fl = fle;
-        this.fr = fre;
-        this.bl = ble;
-        this.br = bre;
-        this.imu = imuu;
+    public GyroDrive(Telemetry telemetry){
         this.telemetry = telemetry;
     }
 
-    public void assignGyroDrive(DcMotor fle, DcMotor fre, DcMotor ble, DcMotor bre, BNO055IMU imuu, Telemetry telemetry){
-        this.fl = fle;
-        this.fr = fre;
-        this.bl = ble;
-        this.br = bre;
-        this.imu = imuu;
-        this.telemetry = telemetry;
+    public void init(HardwareMap hardwareMap){
+        this.hardwareMap = hardwareMap;
+        fl = this.hardwareMap.dcMotor.get("fl");
+        bl = this.hardwareMap.dcMotor.get("bl");
+        fr = this.hardwareMap.dcMotor.get("fr");
+        br = this.hardwareMap.dcMotor.get("br");
+
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.calibrationDataFile = "AdafruitIMUCalibration.json";
+        parameters.loggingEnabled = true;
+        parameters.loggingTag = "IMU";
+        imu = this.hardwareMap.get(BNO055IMU.class, "imu");
+        imu.initialize(parameters);
     }
 
     public void resetEncoders(){
@@ -59,6 +63,11 @@ public class GyroDrive {
         br.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
+    public void leftStickBut2EncoderReset(){
+        resetEncoders();
+        runUsingEncoder();
+    }
+
     private void driveMotorTelemetry(){
         telemetry.addData("fl Pos", fl.getCurrentPosition());
         telemetry.addData("fr Pos", fr.getCurrentPosition());
@@ -66,13 +75,16 @@ public class GyroDrive {
         telemetry.addData("br Pos", br.getCurrentPosition());
     }
 
-    public void drivetrainInputs(double leftStickXe, double leftStickYe, double rightStickXe, boolean leftBumpere, boolean rightStickButton){
+    public void drivetrainInputs(double leftStickXe, double leftStickYe, double rightStickXe,
+                                 boolean leftBumpere, boolean rightStickButton, boolean leftStickButton2){
         this.leftStickX = leftStickXe;
         this.rightStickX = rightStickXe;
         this.leftStickY = -leftStickYe;
         this.leftBumper = leftBumpere;
         this.rightStickBut = rightStickButton;
+        this.leftStickBut2 = leftStickButton2;
         weBeDrivin();
+        leftStickBut2EncoderReset();
     }
 
     public void enableTelemetry(){

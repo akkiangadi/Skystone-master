@@ -23,7 +23,7 @@ public class YibetteTele extends OpMode {
     Servo t1, t2, v1, v2, grab;
     BNO055IMU imu;
 
-    GyroDrive gyroDrive = new GyroDrive(null, null, null, null, null);
+    GyroDrive gyroDrive = new GyroDrive(null, null, null, null, null, null);
     Intake intake = new Intake(null, null);
     Slides slides = new Slides(null, null);
     WaffleTrapper waffleTrapper = new WaffleTrapper(null, null);
@@ -61,7 +61,7 @@ public class YibetteTele extends OpMode {
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
 
-        gyroDrive.assignGyroDrive(fl, fr, bl, br, imu);
+        gyroDrive.assignGyroDrive(fl, fr, bl, br, imu, telemetry);
         intake.assignIntake(i1, i2);
         slides.assignSlides(s1, s2);
         waffleTrapper.assignWaffleTrapper(t1, t2);

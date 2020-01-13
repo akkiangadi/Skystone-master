@@ -21,7 +21,7 @@ public class TruePain extends OpMode {
     String dtChosen;
     ElapsedTime time = new ElapsedTime();
 
-    GyroDrive gyroDrive = new GyroDrive(null, null, null, null, null);
+    GyroDrive gyroDrive = new GyroDrive(null, null, null, null, null, null);
     PainDrive painDrive = new PainDrive(null, null, null, null);
     RobotDrive robotDrive = new RobotDrive(null, null, null, null);
 
@@ -43,7 +43,7 @@ public class TruePain extends OpMode {
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
 
-        gyroDrive.assignGyroDrive(fl, fr, bl, br, imu);
+        gyroDrive.assignGyroDrive(fl, fr, bl, br, imu, telemetry);
         robotDrive.assignRobotDrive(fl, fr, bl, br);
         painDrive.assignPainDrive(fl, fr, bl, br);
     }
