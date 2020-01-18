@@ -32,8 +32,8 @@ public class MovementTest extends OpMode {
 
         ArrayList<Waypoint> path = new ArrayList<>();
         path.add(new Waypoint(0,0,2, 1, 1));
-        path.add(new Waypoint(100,150,2, 1, 1, Math.toRadians(90)));
-        path.add(new Waypoint(30,70,2, 1, 1));
+        path.add(new Waypoint(8,10,2, 1, 1, Math.toRadians(90)));
+        path.add(new Waypoint(3,15,2, 1, 1));
 
 
         movement.followPath(path);

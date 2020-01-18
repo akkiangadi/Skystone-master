@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Yibbon.Subsystems.Drivetrains;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -13,20 +14,20 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 public class GyroDrive {
 
     private DcMotor fl, fr, bl, br;
-    double pose, leftStickX, leftStickY, rightStickX, x2, y2, flPower, frPower, blPower, brPower;
+    double pose, x2, y2, flPower, frPower, blPower, brPower;
     public double offsetAngle = 0;
-    boolean leftBumper, rightStickBut, leftStickBut2;
+    private double time, timeSlowReset = 0;
     BNO055IMU imu;
     Orientation angles;
     HardwareMap hardwareMap;
-    Telemetry telemetry;
+    Gamepad gamepad1, gamepad2;
     boolean telemetryEnabled = false;
 
-    public GyroDrive(Telemetry telemetry){
-        this.telemetry = telemetry;
-    }
+    public GyroDrive(){ }
 
-    public void init(HardwareMap hardwareMap){
+    public void init(HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, boolean encoderBool){
+        this.gamepad1 = gamepad1;
+        this.gamepad2 = gamepad2;
         this.hardwareMap = hardwareMap;
         fl = this.hardwareMap.dcMotor.get("fl");
         bl = this.hardwareMap.dcMotor.get("bl");
@@ -40,6 +41,14 @@ public class GyroDrive {
         parameters.loggingTag = "IMU";
         imu = this.hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
+        /*
+        if (encoderBool){
+            resetEncoders();
+            RunUsingEncoder();
+        }
+         */
+        resetEncoders();
+        runUsingEncoder();
     }
 
     public void resetEncoders(){
@@ -68,23 +77,10 @@ public class GyroDrive {
         runUsingEncoder();
     }
 
-    private void driveMotorTelemetry(){
-        telemetry.addData("fl Pos", fl.getCurrentPosition());
-        telemetry.addData("fr Pos", fr.getCurrentPosition());
-        telemetry.addData("bl Pos", bl.getCurrentPosition());
-        telemetry.addData("br Pos", br.getCurrentPosition());
-    }
-
-    public void drivetrainInputs(double leftStickXe, double leftStickYe, double rightStickXe,
-                                 boolean leftBumpere, boolean rightStickButton, boolean leftStickButton2){
-        this.leftStickX = leftStickXe;
-        this.rightStickX = rightStickXe;
-        this.leftStickY = -leftStickYe;
-        this.leftBumper = leftBumpere;
-        this.rightStickBut = rightStickButton;
-        this.leftStickBut2 = leftStickButton2;
+    public void drivetrainInputs(double time){
+        this.time = time;
         weBeDrivin();
-        leftStickBut2EncoderReset();
+        //leftStickBut2EncoderReset();
     }
 
     public void enableTelemetry(){
@@ -95,24 +91,27 @@ public class GyroDrive {
         this.angles   = imu.getAngularOrientation(AxesReference.INTRINSIC,
                 AxesOrder.ZYX, AngleUnit.DEGREES);
         this.pose = (Math.toRadians(angles.firstAngle) - this.offsetAngle);
-        if (this.rightStickBut){
-            this.offsetAngle = this.pose;
-
+        if (time > (timeSlowReset + 0.2)){
+            if (this.gamepad1.back){
+                this.offsetAngle = this.pose;
+                timeSlowReset = time;
+            }
         }
 
-        x2 = (this.leftStickX*Math.cos(pose) + this.leftStickY*Math.sin(pose));
-        y2 = (this.leftStickY*Math.cos(pose) - this.leftStickX*Math.sin(pose));
 
-        flPower = x2 + y2 + this.rightStickX;
-        frPower = x2 - y2 + this.rightStickX;
-        blPower = -x2 + y2 + this.rightStickX;
-        brPower = -x2 - y2 + this.rightStickX;
+        x2 = (this.gamepad1.left_stick_x*Math.cos(pose) + this.gamepad1.left_stick_y*Math.sin(pose));
+        y2 = (this.gamepad1.left_stick_y*Math.cos(pose) - this.gamepad1.left_stick_x*Math.sin(pose));
 
-        if (this.leftBumper == true){
-            flPower/=3;
-            frPower/=3;
-            blPower/=3;
-            brPower/=3;
+        frPower = x2 + y2 + this.gamepad1.right_stick_x;
+        flPower = x2 - y2 + this.gamepad1.right_stick_x;
+        brPower = -x2 + y2 + this.gamepad1.right_stick_x;
+        blPower = -x2 - y2 + this.gamepad1.right_stick_x;
+
+        if (this.gamepad1.left_bumper == true){
+            flPower/=4;
+            frPower/=4;
+            blPower/=4;
+            brPower/=4;
         }
 
         fl.setPower(flPower);
@@ -120,9 +119,6 @@ public class GyroDrive {
         bl.setPower(blPower);
         br.setPower(brPower);
 
-        if (telemetryEnabled == true){
-            driveMotorTelemetry();
-        }
     }
 
 }

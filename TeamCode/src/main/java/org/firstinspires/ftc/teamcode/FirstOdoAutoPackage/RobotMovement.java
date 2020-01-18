@@ -75,7 +75,7 @@ public class RobotMovement {
 
     int tickerFollow = 0;
     public boolean followPath(ArrayList<Waypoint> allPoints ){
-        if ((tickerFollow +1) < allPoints.size()){
+        if ((tickerFollow+1) < allPoints.size()){
             if (inTriggerZone(allPoints.get(tickerFollow))){
                 tickerFollow+=1;
             }

@@ -17,7 +17,6 @@ import java.util.Locale;
  * Original Work Copright(c) 2019 OpenFTC Team
  * Derived Work Copyright(c) 2019 DogeDevs
  */
-@TeleOp(name = "Skystone Detector OpMode2", group="DogeCV")
 
 public class SkystoneDetectionTest2 extends LinearOpMode {
 

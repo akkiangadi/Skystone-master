@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Yin.Yin;
 
-@TeleOp(name="YinTele", group = "YinTele")
 public class YinTele extends OpMode {
 
     Yin yin = new Yin();

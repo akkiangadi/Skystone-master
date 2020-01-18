@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.Yibbette.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Yibbette.Subsystems.Slides;
 import org.firstinspires.ftc.teamcode.Yibbette.Subsystems.WaffleTrapper;
 
-@TeleOp(name = "December30", group = "eee")
+
 public class YibetteTele extends OpMode {
 
 
