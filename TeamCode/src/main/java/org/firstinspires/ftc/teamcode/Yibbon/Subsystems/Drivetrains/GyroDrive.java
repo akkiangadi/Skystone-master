@@ -34,6 +34,11 @@ public class GyroDrive {
         fr = this.hardwareMap.dcMotor.get("fr");
         br = this.hardwareMap.dcMotor.get("br");
 
+        fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.calibrationDataFile = "AdafruitIMUCalibration.json";
@@ -97,15 +102,15 @@ public class GyroDrive {
                 timeSlowReset = time;
             }
         }
+        double yy = this.gamepad1.left_stick_y;
 
+        x2 = (this.gamepad1.left_stick_x*Math.cos(pose) + (-yy)*Math.sin(pose));
+        y2 = ((-yy)*Math.cos(pose) - this.gamepad1.left_stick_x*Math.sin(pose));
 
-        x2 = (this.gamepad1.left_stick_x*Math.cos(pose) + this.gamepad1.left_stick_y*Math.sin(pose));
-        y2 = (this.gamepad1.left_stick_y*Math.cos(pose) - this.gamepad1.left_stick_x*Math.sin(pose));
-
-        frPower = x2 + y2 + this.gamepad1.right_stick_x;
-        flPower = x2 - y2 + this.gamepad1.right_stick_x;
-        brPower = -x2 + y2 + this.gamepad1.right_stick_x;
-        blPower = -x2 - y2 + this.gamepad1.right_stick_x;
+        flPower = x2 + y2 + this.gamepad1.right_stick_x;
+        frPower = x2 - y2 + this.gamepad1.right_stick_x;
+        blPower = -x2 + y2 + this.gamepad1.right_stick_x;
+        brPower = -x2 - y2 + this.gamepad1.right_stick_x;
 
         if (this.gamepad1.left_bumper == true){
             flPower/=4;

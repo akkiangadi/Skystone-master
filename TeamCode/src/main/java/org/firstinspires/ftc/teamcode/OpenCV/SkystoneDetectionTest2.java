@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 
@@ -30,9 +31,8 @@ public class SkystoneDetectionTest2 extends LinearOpMode {
                 hardwareMap.appContext.getResources().getIdentifier(
                 "cameraMonitorViewId", "id",
                         hardwareMap.appContext.getPackageName());
-        phoneCam =
-                new OpenCvInternalCamera(OpenCvInternalCamera.CameraDirection.BACK,
-                cameraMonitorViewId);
+        phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+
 
         phoneCam.openCameraDevice();
 
