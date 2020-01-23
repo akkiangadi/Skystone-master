@@ -17,15 +17,15 @@ public class SkystonePipe extends OpenCvPipeline {
     public static int valLeft = -1;
     public static int valRight = -1;
 
-    private static double rectHeight = 0.075;
-    private static double rectWidth = 0.1875;
+    private static double rectHeight = 0.07;
+    private static double rectWidth = 0.175;
 
-    private static double offsetX = 0;//changing this moves the three rects and the three circles left or right, range : (-2, 2) not inclusive
-    private static double offsetY = 0;//changing this moves the three rects and circles up or down, range: (-4, 4) not inclusive
+    private static double offsetX = -0.125;//changing this moves the three rects and the three circles left or right, range : (-2, 2) not inclusive
+    private static double offsetY = 0.15;//changing this moves the three rects and circles up or down, range: (-4, 4) not inclusive
 
-    private static double[] midPos = {0.5+offsetX, 0.5+offsetY};//0 = col, 1 = row
-    private static double[] leftPos = {0.25+offsetX, 0.5+offsetY};
-    private static double[] rightPos = {0.75+offsetX, 0.5+offsetY};
+    private static double[] midPos = {0.325, 0.65};
+    private static double[] leftPos = {0.125, 0.65};
+    private static double[] rightPos = {0.525, 0.65};
     //moves all rectangles right or left by amount. units are in ratio to monitor
 
     Mat yCbCrChan2Mat = new Mat();

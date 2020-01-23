@@ -36,11 +36,11 @@ public class VirtualFourBar {
 
     private void v4b(){
         if (gamepad2.dpad_up){
-            v1.setPosition(0.7);
-            v2.setPosition(0.3);
+            v1.setPosition(0.9);
+            v2.setPosition(0.1);
         } else if (gamepad2.dpad_down){
-            v1.setPosition(0.3);
-            v2.setPosition(0.7);
+            v1.setPosition(0.1);
+            v2.setPosition(0.9);
         } else {
             v1.setPosition(0.5);
             v2.setPosition(0.5);

@@ -17,8 +17,8 @@ public class GyroDrive {
     double pose, x2, y2, flPower, frPower, blPower, brPower;
     public double offsetAngle = 0;
     private double time, timeSlowReset = 0;
-    BNO055IMU imu;
-    Orientation angles;
+    public BNO055IMU imu;
+    public Orientation angles;
     HardwareMap hardwareMap;
     Gamepad gamepad1, gamepad2;
     boolean telemetryEnabled = false;

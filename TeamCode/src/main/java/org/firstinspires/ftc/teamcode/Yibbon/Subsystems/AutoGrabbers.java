@@ -9,15 +9,12 @@ public class AutoGrabbers{
 
     private Servo abgl1, abgl2, abgr1, abgr2;
     private HardwareMap hardwareMap;
-    Gamepad gamepad1, gamepad2;
 
 
     public AutoGrabbers(){
     }
 
-    public void init(HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, boolean initPositionBool){
-        this.gamepad1 = gamepad1;
-        this.gamepad2 = gamepad2;
+    public void init(HardwareMap hardwareMap, boolean initPositionBool){
         this.hardwareMap = hardwareMap;
         abgl1 = this.hardwareMap.servo.get("l1");
         abgl2 = this.hardwareMap.servo.get("l2");
@@ -40,6 +37,7 @@ public class AutoGrabbers{
     }
 
     private void autoGrabbin(){
+        /*
         if (gamepad2.left_trigger>0.1){
             abgl1.setPosition(0.22);
             abgr1.setPosition(0.82);
@@ -55,5 +53,6 @@ public class AutoGrabbers{
             abgl2.setPosition(1);
             abgr2.setPosition(0);
         }
+         */
     }
 }

@@ -15,15 +15,14 @@ public class Intake {
     private DcMotor i1, i2;
     private double time, timeIntakeToggle = 0;
     private HardwareMap hardwareMap;
-    Gamepad gamepad1, gamepad2;
+    Gamepad gamepad1;
 
     public Intake(){
     }
 
-    public void init(HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2){
+    public void init(HardwareMap hardwareMap, Gamepad gamepad1){
         this.hardwareMap = hardwareMap;
         this.gamepad1 = gamepad1;
-        this.gamepad2 = gamepad2;
         i1 = this.hardwareMap.dcMotor.get("i1");
         i2 = this.hardwareMap.dcMotor.get("i2");
     }
@@ -39,7 +38,7 @@ public class Intake {
                 case intakeOut:
                     i1.setPower(-0.3);
                     i2.setPower(0.3);
-                    if (gamepad1.a){toggleIntake = stateToggleIntake.intakeOff;
+                    if (gamepad1.y){toggleIntake = stateToggleIntake.intakeOff;
                     timeIntakeToggle = time;}
                     if (gamepad1.x){toggleIntake = stateToggleIntake.intakeOn;
                     timeIntakeToggle = time;}
@@ -49,13 +48,13 @@ public class Intake {
                     i2.setPower(0);
                     if (gamepad1.x){toggleIntake = stateToggleIntake.intakeOn;
                     timeIntakeToggle = time;}
-                    if (gamepad1.a){toggleIntake = stateToggleIntake.intakeOut;
+                    if (gamepad1.y){toggleIntake = stateToggleIntake.intakeOut;
                     timeIntakeToggle = time;}
                     break;
                 case intakeOn:
                     i1.setPower(0.8);
                     i2.setPower(-0.8);
-                    if (gamepad1.a){toggleIntake = stateToggleIntake.intakeOut;
+                    if (gamepad1.y){toggleIntake = stateToggleIntake.intakeOut;
                     timeIntakeToggle = time;}
                     if (gamepad1.x){toggleIntake = stateToggleIntake.intakeOff;
                     timeIntakeToggle = time;}

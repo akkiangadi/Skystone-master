@@ -25,11 +25,11 @@ public class PostNorthern extends OpMode {
     @Override
     public void init() {
         gyroDrive.init(hardwareMap, gamepad1, gamepad2, true);
-        intake.init(hardwareMap, gamepad1, gamepad2);
+        intake.init(hardwareMap, gamepad1);
         slides.init(hardwareMap, gamepad1, gamepad2);
         waffleTrapper.init(hardwareMap, gamepad1, gamepad2);
         v4b.init(hardwareMap, gamepad1, gamepad2);
-        autoGrab.init(hardwareMap, gamepad1, gamepad2, true);
+        autoGrab.init(hardwareMap,true);
     }
 
     @Override

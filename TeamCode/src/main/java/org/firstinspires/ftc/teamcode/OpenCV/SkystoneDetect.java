@@ -31,7 +31,7 @@ public class SkystoneDetect extends OpMode {
 
         phoneCam.openCameraDevice();//open camera
         phoneCam.setPipeline(skystonepipey);//different stages
-        phoneCam.startStreaming(rows, cols, OpenCvCameraRotation.UPRIGHT);//display on RC
+        phoneCam.startStreaming(rows, cols, OpenCvCameraRotation.SIDEWAYS_RIGHT);//display on RC
         //width, height
         //width = height in this case, because camera is in portrait mode.
 

@@ -19,7 +19,7 @@ public class FirstOdo {
     double WIDTH_BETWEEN_ENCODERS = 12.825;
     double OFFSET_OF_MIDDLE_WHEEL;
     int COUNTS_PER_REV = 8192;
-    double WHEEL_DIAMETER =  2.96;
+    double WHEEL_DIAMETER =  1.96;
 
     double globalX = 0;
     double globalY = 0;
