@@ -14,17 +14,15 @@ public class Intake {
 
     private DcMotor i1, i2;
     private double time, timeIntakeToggle = 0;
-    private HardwareMap hardwareMap;
     Gamepad gamepad1;
 
     public Intake(){
     }
 
     public void init(HardwareMap hardwareMap, Gamepad gamepad1){
-        this.hardwareMap = hardwareMap;
         this.gamepad1 = gamepad1;
-        i1 = this.hardwareMap.dcMotor.get("i1");
-        i2 = this.hardwareMap.dcMotor.get("i2");
+        i1 = hardwareMap.dcMotor.get("i1");
+        i2 = hardwareMap.dcMotor.get("i2");
     }
 
     public void intakeInputs(double time){

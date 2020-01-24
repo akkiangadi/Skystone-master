@@ -11,28 +11,29 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
+import static org.firstinspires.ftc.teamcode.Yibbon.GyroAutoAngleTracker.getGyroAngle;
+
 public class GyroDrive {
 
     private DcMotor fl, fr, bl, br;
-    double pose, x2, y2, flPower, frPower, blPower, brPower;
+    private double pose, x2, y2, flPower, frPower, blPower, brPower, power;
     public double offsetAngle = 0;
     private double time, timeSlowReset = 0;
     public BNO055IMU imu;
     public Orientation angles;
-    HardwareMap hardwareMap;
     Gamepad gamepad1, gamepad2;
     boolean telemetryEnabled = false;
+    boolean autoAngle = true;
 
     public GyroDrive(){ }
 
-    public void init(HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, boolean encoderBool){
+    public void init(HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, boolean encoderBool, boolean autoAngle, double power){
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
-        this.hardwareMap = hardwareMap;
-        fl = this.hardwareMap.dcMotor.get("fl");
-        bl = this.hardwareMap.dcMotor.get("bl");
-        fr = this.hardwareMap.dcMotor.get("fr");
-        br = this.hardwareMap.dcMotor.get("br");
+        fl = hardwareMap.dcMotor.get("fl");
+        bl = hardwareMap.dcMotor.get("bl");
+        fr = hardwareMap.dcMotor.get("fr");
+        br = hardwareMap.dcMotor.get("br");
 
         fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -44,8 +45,10 @@ public class GyroDrive {
         parameters.calibrationDataFile = "AdafruitIMUCalibration.json";
         parameters.loggingEnabled = true;
         parameters.loggingTag = "IMU";
-        imu = this.hardwareMap.get(BNO055IMU.class, "imu");
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
+        this.autoAngle = autoAngle;
+        this.power = power;
         /*
         if (encoderBool){
             resetEncoders();
@@ -84,7 +87,12 @@ public class GyroDrive {
 
     public void drivetrainInputs(double time){
         this.time = time;
-        weBeDrivin();
+        if (autoAngle){
+            weBeDrivin();
+        } else {
+            weBeDrivin2();
+        }
+
         //leftStickBut2EncoderReset();
     }
 
@@ -94,8 +102,42 @@ public class GyroDrive {
 
     public void weBeDrivin(){
         this.angles   = imu.getAngularOrientation(AxesReference.INTRINSIC,
-                AxesOrder.ZYX, AngleUnit.DEGREES);
-        this.pose = (Math.toRadians(angles.firstAngle) - this.offsetAngle);
+                AxesOrder.ZYX, AngleUnit.RADIANS);
+        this.pose = (angles.firstAngle - this.offsetAngle - getGyroAngle());
+        if (time > (timeSlowReset + 0.2)){
+            if (this.gamepad1.back){
+                this.offsetAngle = this.pose;
+                timeSlowReset = time;
+            }
+        }
+        double yy = this.gamepad1.left_stick_y;
+
+        x2 = (this.gamepad1.left_stick_x*Math.cos(pose) + (-yy)*Math.sin(pose));
+        y2 = ((-yy)*Math.cos(pose) - this.gamepad1.left_stick_x*Math.sin(pose));
+
+        flPower = x2 + y2 + this.gamepad1.right_stick_x;
+        frPower = x2 - y2 + this.gamepad1.right_stick_x;
+        blPower = -x2 + y2 + this.gamepad1.right_stick_x;
+        brPower = -x2 - y2 + this.gamepad1.right_stick_x;
+
+        if (this.gamepad1.left_bumper == true){
+            flPower/=4;
+            frPower/=4;
+            blPower/=4;
+            brPower/=4;
+        }
+
+        fl.setPower(flPower*this.power);
+        fr.setPower(frPower*this.power);
+        bl.setPower(blPower*this.power);
+        br.setPower(brPower*this.power);
+
+    }
+
+    public void weBeDrivin2(){
+        this.angles   = imu.getAngularOrientation(AxesReference.INTRINSIC,
+                AxesOrder.ZYX, AngleUnit.RADIANS);
+        this.pose = (angles.firstAngle - this.offsetAngle);
         if (time > (timeSlowReset + 0.2)){
             if (this.gamepad1.back){
                 this.offsetAngle = this.pose;

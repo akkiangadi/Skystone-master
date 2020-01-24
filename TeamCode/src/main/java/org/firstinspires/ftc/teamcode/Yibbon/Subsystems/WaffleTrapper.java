@@ -8,7 +8,6 @@ public class WaffleTrapper {
 
     private Servo t1, t2;
     private double time, timeToggleWaffle = 0;
-    private HardwareMap hardwareMap;
     enum stateToggleWaffleTrapper {
         trapperUp, trapperDown
     }
@@ -20,11 +19,10 @@ public class WaffleTrapper {
     }
 
     public void init(HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2){
-        this.hardwareMap = hardwareMap;
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
-        t1 = this.hardwareMap.servo.get("t1");
-        t2 = this.hardwareMap.servo.get("t2");
+        t1 = hardwareMap.servo.get("t1");
+        t2 = hardwareMap.servo.get("t2");
     }
 
 

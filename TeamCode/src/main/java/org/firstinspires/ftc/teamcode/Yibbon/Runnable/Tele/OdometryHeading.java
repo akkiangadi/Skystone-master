@@ -9,6 +9,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.teamcode.Yibbon.Subsystems.Drivetrains.GyroDrive;
 
+import static org.firstinspires.ftc.teamcode.Yibbon.UsefulMath.AngleWrap;
+
 @TeleOp(name = "OdometryHeading", group = "eee")
 public class OdometryHeading extends OpMode {
 
@@ -19,7 +21,7 @@ public class OdometryHeading extends OpMode {
 
     @Override
     public void init() {
-        gyroDrive.init(hardwareMap, gamepad1, gamepad2, true);
+        gyroDrive.init(hardwareMap, gamepad1, gamepad2, true, true);
         l = hardwareMap.dcMotor.get("i1");
         r = hardwareMap.dcMotor.get("i2");
         m = hardwareMap.dcMotor.get("sr");
@@ -39,7 +41,7 @@ public class OdometryHeading extends OpMode {
         double pose = (gyroDrive.angles.firstAngle);
         telemetry.addData("IMU pose", pose);
         double pose2 = ((ticksToInches(l.getCurrentPosition())-ticksToInches(r.getCurrentPosition()))/WIDTH_BETWEEN_ENCODERS);
-        telemetry.addData("Odometry pose", Math.toDegrees(pose2));
+        telemetry.addData("Odometry pose", AngleWrap(Math.toDegrees(pose2)));
     }
 
     public double ticksToInches(double ticks){

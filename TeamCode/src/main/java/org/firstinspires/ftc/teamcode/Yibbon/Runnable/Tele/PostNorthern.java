@@ -20,11 +20,11 @@ public class PostNorthern extends OpMode {
     VirtualFourBar v4b = new VirtualFourBar();
     AutoGrabbers autoGrab = new AutoGrabbers();
     ElapsedTime eTime = new ElapsedTime();
-    String teleMessage = new String(RandomTelemetry.RandomTelemetry());
+    String teleMessage = RandomTelemetry.RandomTelemetry();
 
     @Override
     public void init() {
-        gyroDrive.init(hardwareMap, gamepad1, gamepad2, true);
+        gyroDrive.init(hardwareMap, gamepad1, gamepad2, true, true, slides.motorPower());
         intake.init(hardwareMap, gamepad1);
         slides.init(hardwareMap, gamepad1, gamepad2);
         waffleTrapper.init(hardwareMap, gamepad1, gamepad2);

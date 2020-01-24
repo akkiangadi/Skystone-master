@@ -8,18 +8,16 @@ public class AutoGrabbers{
 
 
     private Servo abgl1, abgl2, abgr1, abgr2;
-    private HardwareMap hardwareMap;
 
 
     public AutoGrabbers(){
     }
 
     public void init(HardwareMap hardwareMap, boolean initPositionBool){
-        this.hardwareMap = hardwareMap;
-        abgl1 = this.hardwareMap.servo.get("l1");
-        abgl2 = this.hardwareMap.servo.get("l2");
-        abgr1 = this.hardwareMap.servo.get("r1");
-        abgr2 = this.hardwareMap.servo.get("r2");
+        abgl1 = hardwareMap.servo.get("l1");
+        abgl2 = hardwareMap.servo.get("l2");
+        abgr1 = hardwareMap.servo.get("r1");
+        abgr2 = hardwareMap.servo.get("r2");
         if (initPositionBool){
             initPosition();
         }

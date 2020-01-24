@@ -13,19 +13,17 @@ public class VirtualFourBar {
     private Servo grab, v1, v2;
     private stateToggleGrab toggleGrab = stateToggleGrab.notgrab;
     private double time, timeGrabToggle = 0;
-    private HardwareMap hardwareMap;
     Gamepad gamepad1, gamepad2;
 
     public VirtualFourBar(){
     }
 
     public void init(HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2){
-        this.hardwareMap = hardwareMap;
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
-        v1 = this.hardwareMap.servo.get("v1");
-        v2 = this.hardwareMap.servo.get("v2");
-        grab = this.hardwareMap.servo.get("grab");
+        v1 = hardwareMap.servo.get("v1");
+        v2 = hardwareMap.servo.get("v2");
+        grab = hardwareMap.servo.get("grab");
     }
 
     public void v4bInputs(double time){
