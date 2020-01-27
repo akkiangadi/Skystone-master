@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.Yibbette.Subsystems.Slides;
 import org.firstinspires.ftc.teamcode.Yibbette.Subsystems.VirtualFourBar;
 import org.firstinspires.ftc.teamcode.Yibbette.Subsystems.WaffleTrapper;
 
-@TeleOp(name = "ScrimT", group = "eee")
+//@TeleOp(name = "ScrimT", group = "eee")
 public class ScrimmageTele extends OpMode {
 
 

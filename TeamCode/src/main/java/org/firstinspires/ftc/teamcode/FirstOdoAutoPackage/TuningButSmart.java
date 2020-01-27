@@ -4,6 +4,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -15,11 +16,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 public class TuningButSmart extends OpMode {
     private DcMotor fl, fr, bl, br, ol, or, h;
     private BNO055IMU imu;
-    private double pose = 0, previouspose = 0;
+    private double pose = 0;
     private Orientation angles;
     private ElapsedTime eTime = new ElapsedTime();
     private double widthOfEncoders = 0, finalencoders = 0;
-    private double middleOffsetValue = 0, finalMiddleOffsetValue = 0;
 
     enum findTrackWidth {
         notThere, done
@@ -45,12 +45,23 @@ public class TuningButSmart extends OpMode {
         h = hardwareMap.dcMotor.get("sr");
 
         ol.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        ol.setDirection(DcMotorSimple.Direction.REVERSE);
         or.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         h.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         ol.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         or.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         h.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        fl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        fr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -77,18 +88,23 @@ public class TuningButSmart extends OpMode {
         this.pose = (Math.toRadians(angles.firstAngle));
 
         widthCalc();
-        middleWidthCalc();
-
     }
 
     private void widthCalc(){
         if (eTime.time() > 0.2){
             switch (turnRobot){
                 case notThere:
-                    if (gamepad1.a){turnRobot = findTrackWidth.done;
+                    if (pose < 90) {
+                        fl.setPower(0.2);
+                        fr.setPower(0.2);
+                        bl.setPower(0.2);
+                        br.setPower(0.2);
+                    } else {
+                        turnRobot = findTrackWidth.done;
                         eTime.reset();
-                        this.finalencoders = this.widthOfEncoders;}
-                    telemetry.addData("heading and then press a", pose);
+                        this.finalencoders = this.widthOfEncoders;
+                    }
+                    telemetry.addData("heading", pose);
                     double temp = (ticksToInches(ol.getCurrentPosition()) - ticksToInches(or.getCurrentPosition()));
                     this.widthOfEncoders = (temp/pose);
                     telemetry.addData("Track Width", this.widthOfEncoders);
@@ -100,34 +116,11 @@ public class TuningButSmart extends OpMode {
         }
     }
 
-    private void middleWidthCalc(){
-        if (eTime.time() > 0.2){
-            switch (middleRobot){
-                case notThere:
-                    if (gamepad1.b){
-                        middleRobot = findMiddleOffset.done;
-                        eTime.reset();
-                    }
-                    break;
-                case done:
-                    telemetry.addData("turn 90", pose);
-                    double inchestMiddle = ticksToInches(h.getCurrentPosition());
-                    if (pose != 0){
-                        this.middleOffsetValue = (inchestMiddle/pose);
-                    } else {
-                        this.middleOffsetValue = 0;
-                    }
-                    telemetry.addData("Middle Offset", this.middleOffsetValue);
-                    break;
-            }
-        }
-    }
-
     private double ticksToInches(int ticks){
-        double DIAMETER_OF_ODO_WHEEL = 1.96;
+        double DIAMETER_OF_ODO_WHEEL = 1.9685;
         double inchesPerRotation = Math.PI*DIAMETER_OF_ODO_WHEEL;
         double ticksPerRotation = 8192;
-        double conversionticksToInches = (inchesPerRotation/ticksPerRotation);
-        return conversionticksToInches*ticks;
+        double conversionTicksToInches = (inchesPerRotation/ticksPerRotation);
+        return conversionTicksToInches*ticks;
     }
 }

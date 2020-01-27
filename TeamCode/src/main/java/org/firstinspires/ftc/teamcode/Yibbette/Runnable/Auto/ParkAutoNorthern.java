@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-@Autonomous(name = "Park Auto This One Dani", group = "All By ONeself")
+//@Autonomous(name = "Park Auto This One Dani", group = "All By ONeself")
 public class ParkAutoNorthern extends LinearOpMode {
     DcMotor fl, fr, bl, br;
     Servo abgl1, abgl2, abgr1, abgr2;

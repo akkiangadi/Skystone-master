@@ -14,17 +14,17 @@ grab - v4b grab servo
         grab = 0.7
     grab
         grab = 0.3
-abgr1, abgl1 - flip out auto grab servo
-    inwards
-        abgr1 = 0.1
+abgr1, abgl1 - grab auto grab servo
+    grab
+        abgr1 = 0.0
         abgl1 = 0.9
-    outwards
+    ungrab
         abgr1 = 0.72
         abgl1 = 0.32
-abgr2, abgl2 - the grab portion of the auto grab servo
+abgr2, abgl2 - the flip portion of the auto grab servo
     upwards
-        abgl2 = 1
-        abgr2 = 0
-    downwards
-        abgl2 = 0.2
-        abgr2 = 0.8
+        abgl2 = 0.8
+        abgr2 = 0.2
+    out
+        abgl2 = 0.1
+        abgr2 = 0.9

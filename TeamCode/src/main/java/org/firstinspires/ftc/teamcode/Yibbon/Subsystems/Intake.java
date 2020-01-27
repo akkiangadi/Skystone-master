@@ -50,8 +50,8 @@ public class Intake {
                     timeIntakeToggle = time;}
                     break;
                 case intakeOn:
-                    i1.setPower(0.8);
-                    i2.setPower(-0.8);
+                    i1.setPower(0.9);
+                    i2.setPower(-0.9);
                     if (gamepad1.y){toggleIntake = stateToggleIntake.intakeOut;
                     timeIntakeToggle = time;}
                     if (gamepad1.x){toggleIntake = stateToggleIntake.intakeOff;

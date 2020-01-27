@@ -22,18 +22,21 @@ public class GyroDrive {
     public BNO055IMU imu;
     public Orientation angles;
     Gamepad gamepad1, gamepad2;
-    boolean telemetryEnabled = false;
+    boolean telemetryEnabled = true;
     boolean autoAngle = true;
+    Telemetry telemetry;
 
     public GyroDrive(){ }
 
-    public void init(HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, boolean encoderBool, boolean autoAngle, double power){
+    public void init(HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, boolean encoderBool, boolean autoAngle, Telemetry telemetry){
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
+        this.telemetry = telemetry;
         fl = hardwareMap.dcMotor.get("fl");
         bl = hardwareMap.dcMotor.get("bl");
         fr = hardwareMap.dcMotor.get("fr");
         br = hardwareMap.dcMotor.get("br");
+
 
         fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -48,13 +51,6 @@ public class GyroDrive {
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
         this.autoAngle = autoAngle;
-        this.power = power;
-        /*
-        if (encoderBool){
-            resetEncoders();
-            RunUsingEncoder();
-        }
-         */
         resetEncoders();
         runUsingEncoder();
     }
@@ -85,19 +81,28 @@ public class GyroDrive {
         runUsingEncoder();
     }
 
-    public void drivetrainInputs(double time){
+    public void drivetrainInputs(double time, double power){
+        this.power = power;
         this.time = time;
-        if (autoAngle){
+        if (autoAngle == true){
             weBeDrivin();
         } else {
             weBeDrivin2();
         }
-
-        //leftStickBut2EncoderReset();
+        if (gamepad2.left_stick_button){
+            leftStickBut2EncoderReset();
+        }
     }
 
     public void enableTelemetry(){
         this.telemetryEnabled = true;
+    }
+
+    public void telemetryDT(){
+        telemetry.addData("fl", fl.getCurrentPosition());
+        telemetry.addData("fr", fr.getCurrentPosition());
+        telemetry.addData("bl", bl.getCurrentPosition());
+        telemetry.addData("br", br.getCurrentPosition());
     }
 
     public void weBeDrivin(){
@@ -125,12 +130,17 @@ public class GyroDrive {
             frPower/=4;
             blPower/=4;
             brPower/=4;
+        } else if (this.gamepad1.right_bumper == true){
+            flPower/=7;
+            frPower/=7;
+            blPower/=7;
+            brPower/=7;
         }
 
-        fl.setPower(flPower*this.power);
-        fr.setPower(frPower*this.power);
-        bl.setPower(blPower*this.power);
-        br.setPower(brPower*this.power);
+        fl.setPower(flPower);
+        fr.setPower(frPower);
+        bl.setPower(blPower);
+        br.setPower(brPower);
 
     }
 
@@ -159,12 +169,19 @@ public class GyroDrive {
             frPower/=4;
             blPower/=4;
             brPower/=4;
+        } else if (this.gamepad1.right_bumper == true){
+            flPower/=7;
+            frPower/=7;
+            blPower/=7;
+            brPower/=7;
         }
 
         fl.setPower(flPower);
         fr.setPower(frPower);
         bl.setPower(blPower);
         br.setPower(brPower);
+
+        telemetryDT();
 
     }
 

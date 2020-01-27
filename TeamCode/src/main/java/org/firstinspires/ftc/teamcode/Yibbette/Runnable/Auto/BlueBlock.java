@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "northernBlueBlock", group = "ee")
+//@Autonomous(name = "northernBlueBlock", group = "ee")
 public class BlueBlock extends LinearOpMode {
     DcMotor fl, fr, bl, br;
     Servo abgl1, abgl2, abgr1, abgr2;

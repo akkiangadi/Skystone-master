@@ -5,15 +5,16 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Yibbon.RandomTelemetry;
 import org.firstinspires.ftc.teamcode.Yibbon.Subsystems.AutoGrabbers;
 import org.firstinspires.ftc.teamcode.Yibbon.Subsystems.Drivetrains.GyroDrive;
+import org.firstinspires.ftc.teamcode.Yibbon.Subsystems.Drivetrains.RobotDrive;
 import org.firstinspires.ftc.teamcode.Yibbon.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Yibbon.Subsystems.Slides;
 import org.firstinspires.ftc.teamcode.Yibbon.Subsystems.VirtualFourBar;
 import org.firstinspires.ftc.teamcode.Yibbon.Subsystems.WaffleTrapper;
 
-@TeleOp(name = "PostNorthern", group = "eee")
-public class PostNorthern extends OpMode {
+@TeleOp(name = "SouthTele", group = "eee")
+public class SouthernTele extends OpMode {
 
-    GyroDrive gyroDrive = new GyroDrive();
+    RobotDrive robotDrive = new RobotDrive();
     Intake intake = new Intake();
     Slides slides = new Slides();
     WaffleTrapper waffleTrapper = new WaffleTrapper();
@@ -24,7 +25,7 @@ public class PostNorthern extends OpMode {
 
     @Override
     public void init() {
-        gyroDrive.init(hardwareMap, gamepad1, gamepad2, true, false, telemetry);
+        robotDrive.init(hardwareMap, gamepad1, gamepad2);
         intake.init(hardwareMap, gamepad1);
         slides.init(hardwareMap, gamepad1, gamepad2);
         waffleTrapper.init(hardwareMap, gamepad1, gamepad2);
@@ -34,13 +35,12 @@ public class PostNorthern extends OpMode {
 
     @Override
     public void loop() {
-        gyroDrive.drivetrainInputs(eTime.time(), slides.slideHeightMovementDampener());
+        robotDrive.driveInputs();
         intake.intakeInputs(eTime.time());
         slides.slideInputs2();
         waffleTrapper.waffleTrapperInputs(eTime.time());
         v4b.v4bInputs(eTime.time());
         autoGrab.autoGrabInputs();
-        telemetry.addData("OffsetAngle", gyroDrive.offsetAngle);
         telemetry.addData("", this.teleMessage);
     }
 }

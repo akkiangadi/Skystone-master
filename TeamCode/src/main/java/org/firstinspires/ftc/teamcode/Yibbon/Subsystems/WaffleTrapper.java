@@ -34,15 +34,15 @@ public class WaffleTrapper {
     public void waffleToggle(){
         if (time > (timeToggleWaffle + 0.2)){
             switch (toggleWaffleTrapper){
-                case trapperDown:
+                case trapperUp:
                     t1.setPosition(1);
                     t2.setPosition(0);
-                    if (gamepad1.left_stick_button){toggleWaffleTrapper = stateToggleWaffleTrapper.trapperUp; timeToggleWaffle = time;}
+                    if (gamepad1.left_stick_button){toggleWaffleTrapper = stateToggleWaffleTrapper.trapperDown; timeToggleWaffle = time;}
                     break;
-                case trapperUp:
+                case trapperDown:
                     t1.setPosition(0);
                     t2.setPosition(1);
-                    if (gamepad1.left_stick_button){toggleWaffleTrapper = stateToggleWaffleTrapper.trapperDown; timeToggleWaffle = time;}
+                    if (gamepad1.left_stick_button){toggleWaffleTrapper = stateToggleWaffleTrapper.trapperUp; timeToggleWaffle = time;}
                     break;
             }
         }

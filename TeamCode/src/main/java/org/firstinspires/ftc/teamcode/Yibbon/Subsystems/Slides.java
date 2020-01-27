@@ -62,12 +62,12 @@ public class Slides {
         if (gamepad2.right_trigger > 0.1){
             if (s1.getCurrentPosition() < SLIDE_MAX_HEIGHT){
                 //up
-                s1.setPower(0.85);
-                s2.setPower(-0.85);
+                s1.setPower(0.9);
+                s2.setPower(-0.9);
             }
         } else if (gamepad2.left_trigger > 0.1 && slideSwitch.getState()){
-            s1.setPower(-0.5);
-            s2.setPower(0.5);
+            s1.setPower(-0.6);
+            s2.setPower(0.6);
 
         } else{
             s1.setPower(0);
@@ -83,9 +83,7 @@ public class Slides {
         return s1.getCurrentPosition() - zeroPoint;
     }
 
-    public double motorPower(){
-
-
+    public double slideHeightMovementDampener(){
         if (slideHeight() < 800){
             return 1;
         } else {

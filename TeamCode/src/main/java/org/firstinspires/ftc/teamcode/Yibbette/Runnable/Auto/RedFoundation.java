@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "northernRedFoundation", group = "ee")
+//@Autonomous(name = "northernRedFoundation", group = "ee")
 public class RedFoundation extends LinearOpMode {
     DcMotor fl, fr, bl, br;
     Servo abgl1, abgl2, abgr1, abgr2;
